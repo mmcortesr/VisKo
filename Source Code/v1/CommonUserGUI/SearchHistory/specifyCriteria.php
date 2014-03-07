@@ -1,35 +1,19 @@
+	<!--Import Header with VisKo logo-->
 <?php
-session_start();
-
-$host='earth.cs.utep.edu';
-$user='cs4311team2sp14';
-$password='treeBranch@6';
-$database='cs4311team2sp14';
-$connection = mysql_connect($host, $user, $password);
-if(!$connection){
-die('Could not connect: '. mysql_error());
-//Start the session of this php page
-
-}
-
-$_SESSION['Email']="mmrcortes@gmail.com";
- 
-
-
+	require_once("regHeader.inc");
 ?>
-<!DOCTYPE html>
-<html>
+     
 
-<head>
-<title>Speciy Criteria </title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style1.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="datepicker.css" media="screen" />
 <script src="bootstrap-datepicker.js"></script>
+
+<!--Funtion set fields, gets input from all the dropdown menus, and puts the into a query
+*To send it back to the database, and get search results*/-->
 <script>
 function setfields()
 {
-	var query="select * from History where user='mmrcortes@gmail.com'";
+	var query="SELECT * FROM History WHERE user='mmrcortes@gmail.com'";
 
 	var temp = "";
 	var y = "";
@@ -38,7 +22,7 @@ function setfields()
 	{
 		y = document.getElementById("abs").options;
 		document.getElementById("abs1").value=y[x].text;
-		temp = query.concat(", WHERE Abstraction='"+y[x].text+"'");
+		temp = query.concat(" AND Abstraction='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}	
@@ -48,7 +32,7 @@ function setfields()
 	{
 		y = document.getElementById("url").options;
 		document.getElementById("url1").value=y[x].text;
-		temp = query.concat(", WHERE 'Abstraction'='"+y[x].text+"'");
+		temp = query.concat(" AND url='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -57,7 +41,7 @@ function setfields()
 	{
 		y = document.getElementById("set").options;
 		document.getElementById("vs1").value=y[x].text;
-		temp = query.concat(", WHERE 'url' ='"+y[x].text+"'");
+		temp = query.concat(" AND viewerSet='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -66,7 +50,7 @@ function setfields()
 	{
 		y = document.getElementById("format").options;
 		document.getElementById("sf1").value=y[x].text;
-		temp = query.concat(", WHERE 'Abstraction'='"+y[x].text+"'");
+		temp = query.concat(" AND sourceFormat='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -75,7 +59,7 @@ function setfields()
 	{
 		y = document.getElementById("type").options;
 		document.getElementById("st1").value=y[x].text;
-		temp = query.concat(", WHERE 'url' ='"+y[x].text+"'");
+		temp = query.concat(" AND sourceType='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -84,7 +68,7 @@ function setfields()
 	{
 		y = document.getElementById("ttype").options;
 		document.getElementById("tt1").value=y[x].text;
-		temp = query.concat(", WHERE 'Abstraction'='"+y[x].text+"'");
+		temp = query.concat(" AND targetType='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -93,7 +77,7 @@ function setfields()
 	{
 		y = document.getElementById("tformat").options;
 		document.getElementById("tf1").value=y[x].text;
-		temp = query.concat(", WHERE 'url' ='"+y[x].text+"'");
+		temp = query.concat(" AND targetFormat='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -102,42 +86,24 @@ function setfields()
 	document.getElementById("qry").value=query+";";
 }
 </script>
-</head>
 
-<body> <!-- Header-->
-<div id="main_container">
-  <div style"position: fixed; left: 0" class="header" border="1px"> 
-    <div id="logo"><a href="http://cs4311.cs.utep.edu/team2/"><img src="logo.png" alt="" border="0" /></a><font size="10" color="black"><b> VisKo</b></font></div>
-       
-	<!---Navigation Menu-->
-	<div style="position: fixed; left:0px; top: 90px; display: block">
-	 <ul id="sidebar-nav" class="Menu"> 
-	<style type="text/css">a {text-decoration: none; Color: black}</style>
-            <li> <font size=4> <b> <a href="http://cs4311.cs.utep.edu/team2/home.php">Home</a> </b>
-            </li>
-		<p>&nbsp;</p>
-  		   <li><b> <a href="#">Visualize</a>    
-			<p>&nbsp;</p>
-		<li> <a href="http://cs4311.cs.utep.edu/team2/specifyCriteria.php">Search History</a> 
-		<p>&nbsp;</p>
-		<li> <a href="#">Manage Services</a>
-		<p>&nbsp;</p>
+	<!-- Import Navigation side bar for regular user-->
+	      
+<?php 
+ require_once("regNavigation.inc");
+	?>
+<br/> <br/>
 
-		<li> <a href="#">Configure Account</a> 
- 		</b>
-        </ul>
-    </div>
-    </div> 
 	<!-- Middle Content--> 
     <div id="middle_box">
 	  <p> <b> Visualization Search Criteria</b> </p>
-	<p>	 </p>
+	<br/>
        	<!---Dropdown Lists--> 
 
-	<form action="test.php" method="post">
-   	 <p><label>Abstraction:</label>
+	<form action="specifyCriteria.php" method="post">
+   	 <h5>Abstraction</h5>
 	<input type="hidden" id="abs1" name="abs1" >
-   	 <select name="abs" id="abs" style="width: 225px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="abs" id="abs" style="width: 250px">
 		<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -147,10 +113,10 @@ function setfields()
 	echo "<option value=\"abs\">" . $row['Abstraction'] . "</option>";
 	}
 	?> </select> </p>
-	 
-	<p><label>Input URL:</label>
+	
+	 <h5>Input URL</h5> 
 	<input type="hidden" id="url1" name="url1" >
-   	 <select name="url" id="url"  style="width: 235px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="url" id="url"  style="width: 250px">
 	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -163,9 +129,9 @@ function setfields()
          </select></p>
   
 
-	 <p><label>Viewer Set:</label>
+	 <h5>Viewer Set<h5>
 	<input type="hidden" id="vs1" name="vs1" >
-   	 <select name="set" id="set" style="width: 230px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="set" id="set" style="width:250px">
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -176,9 +142,9 @@ function setfields()
 	}
 	?>  </select> </p>
 
-	 <p><label>Source Format:</label>
+	 <h5>Source Format</h5>
 	<input type="hidden" id="sf1" name="sf1" >
-   	 <select name="format" id="format" style="width: 200px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="format" id="format" style="width: 250px">
 	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -190,9 +156,9 @@ function setfields()
 	?> 
          </select></p>
 
-	<p><label>Source Type:</label>
+	<h5>Source Type</h5>
 	<input type="hidden" id="st1" name="st1" >
-   	 <select name="type" id="type" style="width: 218px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="type" id="type" style="width: 250px">
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -205,9 +171,9 @@ function setfields()
 	</select> </p>
 
 
-	<p><label>Target Type:</label>
+	<h5>Target Type</h5>
 	<input type="hidden" id="tt1" name="tt1" >
-   	 <select name="ttype" id="ttype" style="width: 220px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="ttype" id="ttype" style="width: 250px">
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -219,9 +185,9 @@ function setfields()
 	?>   </select> </p>
 
 
-	<p><label>Target Format:</label>
+	<h5>Target Format</h5>
 	<input type="hidden" id="tf1" name="tf1" >
-   	 <select name="tformat" id="tformat" style="width: 207px; -webkit-appearance: menulist-button; border-color: rgb(153, 153, 153);">
+   	 <select name="tformat" id="tformat" style="width: 250px">
         	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
@@ -234,7 +200,7 @@ function setfields()
 	 </select> </p>
 
 	
- 	 <p><input type="submit" value="Search" style="width:100px;" onclick="setfields()" /></p>
+ 	 <p><input type="submit"  class="btn btn-primary" value="Search" style="width:100px;" onclick="setfields()" /></p>
 	
 	<input type="hidden" id="qry" name="qry" value=""/>
 	</form>
@@ -246,28 +212,29 @@ function setfields()
 	
 	if(isset($_POST['qry']))
 	{
-		echo $_POST['qry']."<br/>";
+		echo $_POST['qry']."<br/><br/>";
 		echo "<table border=\"1\"><tr>";
 		$db_selection= mysql_select_db($database, $connection);
-		$counter=1;
-		while ($row = mysql_fetch_array($POST['qry']))
+		$sql = mysql_query($_POST['qry']);
+		$count = 1;
+		while ($row = mysql_fetch_array($sql))
 		{
-			if($counter%4==0)
+			echo"<td>".$row['Images']."</td>";
+			if($count % 3==0)
 			{
-				echo"</tr>";
-				echo"<tr>";
-			}	
-			echo"<td>hi</td>";
-			$counter++;
+				echo "</tr><tr>";
+			}
+			$count++;
 		}
 		echo "</tr></table>";
 	}
 	?>
 	</div>
-	</div>
-	</body>
-</html>
 
+	<div id="middle_box">
 
-
+<!-- Import footer for to end visko-->
+<?php
+	require_once("footer.inc"); 
+?>
 
