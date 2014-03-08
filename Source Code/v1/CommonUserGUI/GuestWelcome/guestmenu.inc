@@ -16,12 +16,12 @@ require_once("header.inc");
           <a class="navbar-brand" href="index.php"><img src="logo.png" alt="" border="0" />&nbsp;&nbsp;&nbsp;<font size="6">VisKo</font></a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" name="login" id="login" action="index.php" onsubmit="return checkRequiredFields('form-control', 'login')" method="post">
+          <form class="navbar-form navbar-right" role="form" name="login" id="login" action="index.php" onsubmit="return (checkRequiredFields('r', 'login') ? true : (alert('missing required field')==false))" method="post">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control" name='username' id='username'  maxlength="50" required>
+              <input type="text" placeholder="Email" class="form-control" name='rusername' id='rusername'  maxlength="50" required>
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name='password' id='password' maxlength="50" required >
+              <input type="password" placeholder="Password" class="form-control" name='rpassword' id='rpassword' maxlength="50" required >
             </div>
             <button type="submit" class="btn btn-primary" name='login' value='Login'>Login</button>
 	    <a class="btn btn-primary" role="button" href="register.php">Register</a>

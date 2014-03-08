@@ -4,23 +4,24 @@
 
 	$count=-1;
 
-	if (!empty($_POST['logout']) && !empty($_SESSION['Email']))
+	if (!empty($_POST['logout']) && !empty($_SESSION['email']))
 	{
 		session_destroy();
 	}
 	
-	 if (!empty($_POST['username']) && !empty($_POST['password'])) 
+	 if (!empty($_POST['rusername']) && !empty($_POST['rpassword'])) 
 	{
-		$_SESSION['Email'] = $_POST['username'];
+		$_SESSION['email'] = $_POST['rusername'];
 
 		
 		//Connect with the database that will be used
 		$db_connection=mysql_select_db($database, $connection);
 
-		$sql = sprintf("SELECT Email, Password FROM UserTest WHERE Email='%s' and Password='%s'", mysql_real_escape_string($_POST['username']), mysql_real_escape_string($_POST['password'])); 
+		$sql = sprintf("SELECT email, password FROM User WHERE email='%s' AND password='%s'", mysql_real_escape_string($_POST['rusername']), mysql_real_escape_string($_POST['rpassword'])); 
 
 		$result=mysql_query($sql);
 	 	$count=mysql_num_rows($result);
+	 		 	
 		if ($count==1) 
 		{
 			header('Location:home.php');	

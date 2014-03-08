@@ -12,10 +12,10 @@
    </legend>
 	    
    <div class="form-group">
-     <form role="form" name="recover" id="recover" action="passwordRecovery.php" onsubmit="return requiredFields('Email')" method="post">
+     <form role="form" name="recover" id="recover" action="passwordRecovery.php"  onsubmit="return (checkRequiredFields('r', 'recover') ? true : (alert('missing required field')==false))" method="post">
 
      <label for="Email"> Account Email *</label>
-     <input type="text" placeholder="Email" class="form-control" name='Email' id="Email" maxlength="50" required>
+     <input type="text" placeholder="Email" class="form-control" name='remail' id="remail" maxlength="50" required>
 	<br/>
      <button type="submit" class="btn btn-primary">Recover Password</button> 
      </form>
