@@ -13,7 +13,7 @@
 <script>
 function setfields()
 {
-	var query="SELECT * FROM History WHERE user='mmrcortes@gmail.com'";
+	var query="SELECT * FROM History WHERE user='<?php echo $_SESSION['email']; ?>'";
 
 	var temp = "";
 	var y = "";
@@ -22,7 +22,7 @@ function setfields()
 	{
 		y = document.getElementById("abs").options;
 		document.getElementById("abs1").value=y[x].text;
-		temp = query.concat(" AND Abstraction='"+y[x].text+"'");
+		temp = query.concat(" AND abstraction='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}	
@@ -41,7 +41,7 @@ function setfields()
 	{
 		y = document.getElementById("set").options;
 		document.getElementById("vs1").value=y[x].text;
-		temp = query.concat(" AND viewerSet='"+y[x].text+"'");
+		temp = query.concat(" AND viewerset='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -50,7 +50,7 @@ function setfields()
 	{
 		y = document.getElementById("format").options;
 		document.getElementById("sf1").value=y[x].text;
-		temp = query.concat(" AND sourceFormat='"+y[x].text+"'");
+		temp = query.concat(" AND sourceformat='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -59,7 +59,7 @@ function setfields()
 	{
 		y = document.getElementById("type").options;
 		document.getElementById("st1").value=y[x].text;
-		temp = query.concat(" AND sourceType='"+y[x].text+"'");
+		temp = query.concat(" AND sourcetype='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -68,7 +68,7 @@ function setfields()
 	{
 		y = document.getElementById("ttype").options;
 		document.getElementById("tt1").value=y[x].text;
-		temp = query.concat(" AND targetType='"+y[x].text+"'");
+		temp = query.concat(" AND targettype='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -77,7 +77,7 @@ function setfields()
 	{
 		y = document.getElementById("tformat").options;
 		document.getElementById("tf1").value=y[x].text;
-		temp = query.concat(" AND targetFormat='"+y[x].text+"'");
+		temp = query.concat(" AND targetformat='"+y[x].text+"'");
 		query = temp;
 		temp="";
 	}
@@ -96,6 +96,7 @@ function setfields()
 
 	<!-- Middle Content--> 
     <div id="middle_box">
+    	
 	  <p> <b> Visualization Search Criteria</b> </p>
 	<br/>
        	<!---Dropdown Lists--> 
@@ -107,10 +108,10 @@ function setfields()
 		<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT Abstraction  FROM History");
+	$sql = mysql_query("SELECT DISTINCT abstraction FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Abstraction</option>";	
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"abs\">" . $row['Abstraction'] . "</option>";
+	echo "<option value=\"abs\">" . $row['abstraction'] . "</option>";
 	}
 	?> </select> </p>
 	
@@ -120,7 +121,7 @@ function setfields()
 	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT url  FROM History");
+	$sql = mysql_query("SELECT DISTINCT url  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any URL</option>";	
 	while ($row = mysql_fetch_array($sql)){
 	echo "<option value=\"url\">" . $row['url'] . "</option>";
@@ -135,10 +136,10 @@ function setfields()
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT ViewerSet  FROM History");
+	$sql = mysql_query("SELECT DISTINCT viewerset  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Viewer Set</option>";
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"vs\">" . $row['ViewerSet'] . "</option>";
+	echo "<option value=\"vs\">" . $row['viewerset'] . "</option>";
 	}
 	?>  </select> </p>
 
@@ -148,10 +149,10 @@ function setfields()
 	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT SourceFormat  FROM History");
+	$sql = mysql_query("SELECT DISTINCT sourceformat  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Source Format</option>";
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"sf\">" . $row['SourceFormat'] . "</option>";
+	echo "<option value=\"sf\">" . $row['sourceformat'] . "</option>";
 	}
 	?> 
          </select></p>
@@ -162,10 +163,10 @@ function setfields()
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT sourceType  FROM History");
+	$sql = mysql_query("SELECT DISTINCT sourcetype  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Source Type</option>";
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"st\">" . $row['sourceType'] . "</option>";
+	echo "<option value=\"st\">" . $row['sourcetype'] . "</option>";
 	}
 	?>  
 	</select> </p>
@@ -177,10 +178,10 @@ function setfields()
        	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT TargetType  FROM History");
+	$sql = mysql_query("SELECT DISTINCT targettype  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Target Type</option>";
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"tt\">" . $row['TargetType'] . "</option>";
+	echo "<option value=\"tt\">" . $row['targettype'] . "</option>";
 	}
 	?>   </select> </p>
 
@@ -191,10 +192,10 @@ function setfields()
         	<?php 
 	/* Select database to populate dropdown*/
 	$db_selection= mysql_select_db($database, $connection);
-	$sql = mysql_query("SELECT DISTINCT TargetFormat  FROM History");
+	$sql = mysql_query("SELECT DISTINCT targetformat  FROM History WHERE user='".$_SESSION['email']."';");
 	echo "<option value=\"abs\">Any Target Format</option>";
 	while ($row = mysql_fetch_array($sql)){
-	echo "<option value=\"tf\">" . $row['TargetFormat'] . "</option>";
+	echo "<option value=\"tf\">" . $row['targetformat'] . "</option>";
 	}
 	?> 
 	 </select> </p>
@@ -212,14 +213,17 @@ function setfields()
 	
 	if(isset($_POST['qry']))
 	{
-		echo $_POST['qry']."<br/><br/>";
-		echo "<table border=\"1\"><tr>";
+	
+		header("Content-type: image/jpeg");
+		echo "<b>Results</b><br/><br/>";
 		$db_selection= mysql_select_db($database, $connection);
 		$sql = mysql_query($_POST['qry']);
 		$count = 1;
+		
+		echo "<table><tr>";
 		while ($row = mysql_fetch_array($sql))
 		{
-			echo"<td>".$row['Images']."</td>";
+			echo "<td><a href='viewDetails.php?id=".$row["id"]."'><img src=showimage.php?id=".$row["id"]." style='width:200px; height:100px'></a></td>";
 			if($count % 3==0)
 			{
 				echo "</tr><tr>";
@@ -227,8 +231,13 @@ function setfields()
 			$count++;
 		}
 		echo "</tr></table>";
+		if($count==1)
+		{
+			echo "None Found<br/>";
+		}
 	}
 	?>
+	
 	</div>
 
 	<div id="middle_box">
@@ -237,4 +246,3 @@ function setfields()
 <?php
 	require_once("footer.inc"); 
 ?>
-

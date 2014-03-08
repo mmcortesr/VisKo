@@ -1,81 +1,79 @@
+	<!--Import Header with VisKo logo-->
 <?php
-$host='earth.cs.utep.edu';
-$user='cs4311team2sp14';
-$password='treeBranch@6';
-$database='cs4311team2sp14';
-$connection = mysql_connect($host, $user, $password);
-if(!$connection){
-die('Could not connect: '. mysql_error());
-} 
-
+	require_once("regHeader.inc");
 ?>
 
-<head>
-<title>View Details </title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style1.css" media="screen" />
-
-</head>
-
-<body> <!-- Header-->
-<div id="main_container">
-  <div style"position: fixed; left: 0" class="header" border="1px"> 
-    <div id="logo"><a href="http://cs4311.cs.utep.edu/team2/"><img src="logo.png" alt="" border="0" /></a><font size="10" color="black"><b> VisKo</b></font></div>
-       
-	<!---Navigation Menu-->
-	<div style="position: fixed; left:0px; top: 90px; display: block">
-	 <ul id="sidebar-nav" class="Menu"> 
-	<style type="text/css">a {text-decoration: none; Color: black}</style>
-            <li> <font size=4> <b> <a href="http://cs4311.cs.utep.edu/team2/home.php">Home</a> </b>
-            </li>
-		<p>&nbsp;</p>
-  		   <li><b> <a href="#">Visualize</a>    
-			<p>&nbsp;</p>
-		<li> <a href="http://cs4311.cs.utep.edu/team2/specifyCriteria.php">Search History</a> 
-		<p>&nbsp;</p>
-		<li> <a href="#">Manage Services</a>
-		<p>&nbsp;</p>
-
-		<li> <a href="#">Configure Account</a> 
- 	     </b>
-        </ul>
-    </div>
-    </div> 
-	<!-- Middle Content--> 
+<link rel="stylesheet" type="text/css" href="datepicker.css" media="screen" />
+<script src="bootstrap-datepicker.js"></script>
+  
+  <!-- Import Navigation side bar for regular user-->
+  <?php 
+ require_once("regNavigation.inc");
+?>
+	<br/> <br/>
+  <!-- Middle Content--> 
     <div id="middle_box">
-	  <p> <b> Search Results Details</b> </p>
-	<p>	 </p>
-       	<!---Resulting Image--> 
-	<img src="VisKo.png" alt="" width= "500" Height ="230" border="1px" /> <hr>
-	 <p> <b> Responsible Pipeline</b> </p>
-	<!--Responsible pipelines and services-->
-	<table border="1" style="width:300px">
-	<tr>
-  	<td>Jill</td>
-  	<td>Smith</td>		
-  	<td>50</td>
-  	</tr>
-	<tr>
-  	<td>Eve</td>
-  	<td>Jackson</td>		
-  	<td>94</td>
-	</tr>
-	<tr>
-  	<td>John</td>
-  	<td>Doe</td>		
- 	 <td>80</td>
-	</tr>
-	</table><hr> 
-	<!--Responssible Query-->
-	 <p> <b> Responsible Query</b> </p>
-	<textarea rows="16" cols="70">
-	At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
-	</textarea>
+      <p> <b> Search View Details </b> </p>
+    	<br/>
+  <?php 
+  
+		echo "<b>Image </b><br/>";
+		$sql =mysql_query("SELECT * FROM History WHERE user='".$_SESSION['email']."' AND id='".$_GET['id']."'");
+		
+		$count = 1;
+		echo "<table border='6'    width='100%'   cellpadding='4' cellspacing='3'>
+  			<tr>
+  			</tr>
+   			<tr>
+			<th>ID</th>
+			<th>Abstraction</th>
+			<th>Output Format</th>
+		 	<th>Date</th>
+				</tr>";
+		while ($row = mysql_fetch_array($sql))
+		{
+			echo "<a href='viewDetails.php?id=".$row["id"]."'><img src=showimage.php?id=".$row["id"]." style='width:700px; height:300px'></a></td>";
+			
+			echo "<br/>";
+			echo"<br/>";
+			
+			
+			echo "<b> Responsible Pipeline </b>";
 
+			echo "<tr>";
+  			echo "<td>" . $row['id'] . "</td>";
+  			echo "<td>" . $row['abstraction'] . "</td>";
+			echo "<td>" . $row['outputformat'] . "</td>";
+  			echo "<td>" . $row['date'] . "</td>"; 	
+			echo "</tr>";
+			echo "<br/>";
+			echo "</table>";
+			echo "<br/> <br/>";
+			echo "<p>No Pipeline Information at the moment <style> color='red'</style></p>";
+			echo "<br/> <br/>";
+			
+			echo "<b> Responsible Query </b>";
+			echo "<textarea rows='10' cols='85'>".$row['query']. "</textarea>";
+			$count++;
+		}
+		
+		
+
+		if($count==1)
+		{
+			echo "None Results Found<br/>";
+		}
+		
+		
+		
+		
+	?>
 	</div>
-	</body>
-</html>
 
+	<div id="middle_box">
 
-
-
+<!-- Import footer for to end visko-->
+<?php
+	require_once("footer.inc"); 
+?>
