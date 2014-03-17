@@ -5,10 +5,10 @@
 	
 	/*Connect to the Database*/
 	require_once("dbc.inc");
-	$host='46.4.87.104';
-	$user='viskogra_team2';
+	$host='earth.cs.utep.edu';
+	$user='cs4311team2sp14';
 	$password='treeBranch@6';
-	$database='viskogra_visko';
+	$database='cs4311team2sp14';
 	$connection = mysql_connect($host, $user, $password);
 	if(!$connection)
 	{
